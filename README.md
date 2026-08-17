@@ -20,6 +20,7 @@ Welcome to the **OOPs Programming** repository! This project serves as a startin
 *   [`access_modifiers_demo.py`](./access_modifiers_demo.py): Demonstrates Public, Protected, and Private access levels (naming conventions and name mangling) in Python.
 *   [`inheritance_demo.py`](./inheritance_demo.py): Demonstrates single, multilevel, hierarchical, and multiple inheritance (MRO resolution of the diamond problem) in Python.
 *   [`polymorphism_demo.py`](./polymorphism_demo.py): Demonstrates static polymorphism simulation, operator overloading, dynamic polymorphism (overriding), and duck typing in Python.
+*   [`abstraction_demo.py`](./abstraction_demo.py): Demonstrates abstract classes, abstract subclass chains, interface simulation, and static methods in Python.
 
 ## How to Run
 
@@ -811,6 +812,93 @@ Standard OOP defines two main forms of polymorphism:
 | **Mechanism** | Method Overloading, Operator Overloading | Method Overriding, Duck Typing |
 | **Speed** | Faster execution (binding already resolved) | Slower execution (requires runtime lookup) |
 | **Requirements** | Methods share a name but differ in parameters | Classes have inheritance (or share method names in Duck Typing) |
+
+---
+
+## Abstraction
+
+**Abstraction** is a fundamental Object-Oriented Programming (OOP) concept that focuses on hiding the complex internal implementation details of a system and exposing only the essential features or interface. It allows users to focus on *what* an object does rather than *how* it does it.
+
+See the complete runnable implementation in [`abstraction_demo.py`](./abstraction_demo.py).
+
+### Key Features of Abstraction
+1.  **Hiding Implementation Details**: Simplifies interactions by shielding external code from complex internal logic.
+2.  **Abstract Methods**: Declared in an abstract blueprint but contain no body/implementation. Subclasses are required to provide their concrete implementation.
+3.  **Concrete Methods**: Fully implemented methods within an abstract base class. Subclasses inherit these behaviors directly but can override them if necessary.
+
+---
+
+### Methods of Achieving Abstraction: Standard OOP vs. Python
+
+Most compile-time languages (like Java) achieve abstraction using explicit abstract classes and interfaces. Python, being dynamic, simulates and implements these concepts differently:
+
+#### 1. Abstract Classes
+*   **OOP Theory**: A class that cannot be instantiated directly and is meant to be subclassed. It can contain both abstract and concrete methods.
+*   **Python implementation**: Created using the built-in `abc` (Abstract Base Class) module. A class inherits from `abc.ABC` and designates abstract methods using the `@abstractmethod` decorator.
+
+```python
+from abc import ABC, abstractmethod
+
+class Animal(ABC):
+    def __init__(self, name: str):
+        self.name = name  # Abstract classes can have constructors
+
+    @abstractmethod
+    def sound(self):
+        pass  # Unimplemented abstract method
+
+    def eat(self):
+        print(f"{self.name} is eating.")  # Concrete method
+```
+
+#### 2. Interfaces
+*   **OOP Theory**: A contract defining only abstract method signatures that implementing classes must fulfill.
+*   **Python implementation**: Python does not have a native `interface` keyword. It achieves interface behavior using **multiple inheritance** of Abstract Base Classes (ABCs) containing exclusively abstract methods.
+
+```python
+class SwimmerInterface(ABC):
+    @abstractmethod
+    def swim(self):
+        pass
+```
+
+---
+
+### Static and Default Methods
+
+#### 1. Static Methods
+Static methods belong to the class namespace rather than any specific instance of the class.
+*   **Python implementation**: Declared using the `@staticmethod` decorator.
+*   *Key Points*: They are invoked directly on the class itself and do not accept `self` or `cls` arguments, meaning they cannot access or modify instance or class state.
+*   *Example*:
+    ```python
+    class MathHelper:
+        @staticmethod
+        def add(x, y):
+            return x + y
+    ```
+
+#### 2. Default Methods (in Interfaces)
+*   **OOP Theory**: Introduced in Java 8 to add concrete implementations to interfaces without breaking existing implementing classes.
+*   **Python implementation**: Because Python interfaces are implemented using normal classes (ABCs), any method in a Python ABC that is not decorated with `@abstractmethod` is implicitly a concrete method with default implementation that subclasses inherit automatically.
+
+---
+
+### Important Questions & Key Takeaways
+
+#### Q1: Can an abstract class extend another abstract class?
+**Yes.** An abstract class can inherit from another abstract class. The child abstract class inherits all parent abstract methods but is **not** required to implement them. The final concrete subclass that ends the inheritance chain must implement all accumulated abstract methods before it can be instantiated.
+
+```python
+class WingedAnimal(Animal, ABC):
+    @abstractmethod
+    def fly(self):
+        pass
+```
+
+#### Q2: Can an abstract class have a constructor and can we create an instance of it?
+*   **Instantiation**: **No.** You cannot instantiate an abstract class directly. If you attempt to instantiate a class inheriting from `ABC` that contains unimplemented `@abstractmethod` decorators, Python raises a `TypeError`.
+*   **Constructor**: **Yes.** An abstract class can define an `__init__` constructor. Subclasses call this constructor using `super().__init__()` to initialize shared attributes upon child instantiation.
 
 ---
 
