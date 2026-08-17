@@ -21,6 +21,7 @@ Welcome to the **OOPs Programming** repository! This project serves as a startin
 *   [`inheritance_demo.py`](./inheritance_demo.py): Demonstrates single, multilevel, hierarchical, and multiple inheritance (MRO resolution of the diamond problem) in Python.
 *   [`polymorphism_demo.py`](./polymorphism_demo.py): Demonstrates static polymorphism simulation, operator overloading, dynamic polymorphism (overriding), and duck typing in Python.
 *   [`abstraction_demo.py`](./abstraction_demo.py): Demonstrates abstract classes, abstract subclass chains, interface simulation, and static methods in Python.
+*   [`interface_demo.py`](./interface_demo.py): Demonstrates interface declaration, multiple interfaces, interface inheritance, and loose coupling in Python.
 
 ## How to Run
 
@@ -899,6 +900,62 @@ class WingedAnimal(Animal, ABC):
 #### Q2: Can an abstract class have a constructor and can we create an instance of it?
 *   **Instantiation**: **No.** You cannot instantiate an abstract class directly. If you attempt to instantiate a class inheriting from `ABC` that contains unimplemented `@abstractmethod` decorators, Python raises a `TypeError`.
 *   **Constructor**: **Yes.** An abstract class can define an `__init__` constructor. Subclasses call this constructor using `super().__init__()` to initialize shared attributes upon child instantiation.
+
+---
+
+## Interfaces
+
+An **Interface** specifies a contract of behaviors that an implementing class must fulfill. It defines *what* a class should do without specifying *how* it should do it.
+
+In Python, interfaces are typically represented using Abstract Base Classes (ABCs) that declare abstract methods without providing implementations.
+
+See the complete runnable implementation in [`interface_demo.py`](./interface_demo.py).
+
+---
+
+### Core Questions & Key Design Rules
+
+#### Q1: Can an interface have instance variables?
+**No.** In standard Object-Oriented design, interfaces represent pure behavior contracts and cannot hold state. All variables declared within an interface are implicitly `public`, `static`, and `final` (constants).
+*   *Python Perspective*: When designing an ABC to act as an interface, it should not define an `__init__` constructor or instance attributes.
+
+#### Q2: Can interfaces have constructors?
+**No.** Since interfaces cannot maintain object state (i.e. no instance variables) and cannot be instantiated directly, they do not have constructors. However, any concrete class implementing the interface can declare its own constructor to initialize its state.
+
+#### Q3: Can a class implement multiple interfaces?
+**Yes.** A class can implement multiple interfaces. This is a crucial feature in languages like Java that restrict multiple inheritance using classes to avoid ambiguity, yet allow multiple inheritance via interfaces.
+*   *Python Perspective*: In Python, this is achieved by inheriting from multiple ABC interface classes:
+    ```python
+    class Duck(Flyable, Swimmable):
+        def fly(self): ...
+        def swim(self): ...
+    ```
+
+---
+
+### Benefits of Interfaces
+
+1.  **Multiple Inheritance**: Combines behavior requirements from different sources into a single concrete class.
+2.  **Strict Contracts**: Establishes a uniform method signature requirement, ensuring design consistency across different classes.
+3.  **Loose Coupling**: Programming to an interface rather than a concrete class makes systems flexible and easy to maintain.
+    *   *Example*: A client function can accept any interchangeable `PaymentGateway` interface implementation (such as `PayPalGateway` or `StripeGateway`) without being coupled to a specific payment provider.
+
+---
+
+### Interface Inheritance
+Interfaces can inherit from other interfaces. When an interface inherits another, it adds new methods to the contract defined by the parent interface. Implementing classes must fulfill the combined set of methods.
+
+```python
+class AnimalInterface(ABC):
+    @abstractmethod
+    def eat(self):
+        pass
+
+class MammalInterface(AnimalInterface, ABC):
+    @abstractmethod
+    def walk(self):
+        pass  # MammalInterface inherits eat() and adds walk()
+```
 
 ---
 
