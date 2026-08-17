@@ -26,6 +26,7 @@ Welcome to the **OOPs Programming** repository! This project serves as a startin
 *   [`nested_classes_demo.py`](./nested_classes_demo.py): Demonstrates static nested classes, non-static inner classes, method-scoped local classes, and anonymous lambda behaviors in Python.
 *   [`relationships_demo.py`](./relationships_demo.py): Demonstrates class relationships (Association, Aggregation, and Composition) and nested lifecycle bindings in Python.
 *   [`cloning_demo.py`](./cloning_demo.py): Demonstrates shallow copying, deep copying, custom cloning hooks (`__copy__`, `__deepcopy__`), and reference mutation effects in Python.
+*   [`generics_demo.py`](./generics_demo.py): Demonstrates generic classes, generic functions, bounded type parameters, Union wildcards, and Python's lack of runtime type enforcement.
 
 ## How to Run
 
@@ -1285,6 +1286,83 @@ class Person:
 | **Independent Nested Objects?** | ❌ No | ✔️ Yes |
 | **Common Tool** | `copy.copy(obj)` | `copy.deepcopy(obj)` |
 | **Primary Use Case** | When nested properties are immutable (integers, strings, tuples) and safe to share | When nested properties are mutable (lists, dicts, custom objects) and must be isolated |
+
+---
+
+## Generics in Python
+
+Because Python is a dynamically typed language, it natively allows you to write functions and classes that work with multiple types out of the box. However, Python also supports **Generics** via the standard `typing` module to enable static type analysis (via `mypy` or `pyright`), improve code readability, and prevent unintended bugs before runtime.
+
+See the complete runnable implementation in [`generics_demo.py`](./generics_demo.py).
+
+---
+
+### Key Benefits of Generics
+1.  **Static Type Safety**: Allows static type checkers to catch type mismatches before execution.
+2.  **Clear Documentation**: Explicates class and method parameter design rules for other developers.
+3.  **Code Reusability**: Eliminates the need to duplicate classes or functions to support different types.
+
+---
+
+### Core Concepts
+
+#### 1. Generic Classes
+A generic class can store or work with different data types without duplicating class structures. This is achieved by subclassing `Generic` and defining type parameters using `TypeVar`.
+
+```python
+from typing import TypeVar, Generic
+
+T = TypeVar("T")
+
+class Box(Generic[T]):
+    def __init__(self, value: T):
+        self.value: T = value
+
+    def get(self) -> T:
+        return self.value
+```
+
+#### 2. Generic Methods / Functions
+Generic functions use `TypeVar` variables in their argument and return signatures to associate parameters.
+
+```python
+from typing import TypeVar
+
+T = TypeVar("T")
+
+def print_and_return(data: T) -> T:
+    print(f"Data: {data}")
+    return data
+```
+
+#### 3. Bounded Type Parameters
+You can restrict a generic type parameter to a class or any of its subclasses using the `bound=` keyword in `TypeVar`. This ensures that you can safely access attributes or methods defined on the bound class.
+
+```python
+from typing import TypeVar
+
+class Vehicle:
+    def start_engine(self): pass
+
+# V is constrained to be Vehicle or its subclasses
+V = TypeVar("V", bound=Vehicle)
+
+def start_ride(vehicle: V) -> None:
+    vehicle.start_engine()  # Guaranteed safe call
+```
+
+#### 4. Wildcard Simulation
+Python simulates wildcards using:
+*   `Any`: Accepts any type whatsoever.
+*   `Union`: Restricts inputs to one of several specific classes (e.g., `Union[int, str]`).
+
+---
+
+### Runtime Behavior & The "Type Erasure" Analogy
+
+It is critical to note that **Python type hints are not enforced at runtime by the interpreter.**
+*   At runtime, type annotations behave similarly to Java's **Type Erasure** because the Python virtual machine ignores type hints during execution.
+*   For instance, declaring `box = Box[int](10)` will still allow you to call `box.set("a string")` during execution without raising a runtime error. Enforcing these constraints at runtime requires manual validation checks (e.g., using `isinstance()`).
 
 ---
 
