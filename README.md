@@ -23,6 +23,7 @@ Welcome to the **OOPs Programming** repository! This project serves as a startin
 *   [`abstraction_demo.py`](./abstraction_demo.py): Demonstrates abstract classes, abstract subclass chains, interface simulation, and static methods in Python.
 *   [`interface_demo.py`](./interface_demo.py): Demonstrates interface declaration, multiple interfaces, interface inheritance, and loose coupling in Python.
 *   [`static_demo.py`](./static_demo.py): Demonstrates class variables, static methods, class methods, and definition-time execution (static block equivalent) in Python.
+*   [`nested_classes_demo.py`](./nested_classes_demo.py): Demonstrates static nested classes, non-static inner classes, method-scoped local classes, and anonymous lambda behaviors in Python.
 
 ## How to Run
 
@@ -1037,6 +1038,70 @@ class Example:
 2.  **Utility Methods**: `@staticmethod` is ideal for placing standalone helper methods within the relevant class namespace.
 3.  **Namespace Organization**: Groups related utility behaviors under a single class namespace.
 4.  **One-Time Setup**: Definition-time class-body execution handles one-time resource initialization.
+
+---
+
+## Inner Classes (Nested Classes)
+
+In Python, an **Inner Class** (or Nested Class) is a class defined entirely inside the body of another class. This allows you to logically group helper classes that are only relevant to the outer class context, improving organization and readability.
+
+See the complete runnable implementation in [`nested_classes_demo.py`](./nested_classes_demo.py).
+
+---
+
+### Core Patterns in Python
+
+Unlike Java, Python does not enforce strict access control (no private package restrictions) and does not automatically bind a nested object instance to its outer object instance.
+
+#### 1. Static Nested Class Equivalent
+*   **OOP Concept**: Independent nested classes that do not require an outer instance.
+*   **Python Perspective**: Python nested classes are static/independent by default. They can access outer class variables if referenced explicitly via the outer class name.
+*   *Example*:
+    ```python
+    class OuterClass:
+        static_var = 100
+
+        class StaticNestedClass:
+            def display(self):
+                print(OuterClass.static_var)  # Explicit reference
+    ```
+
+#### 2. Non-Static Inner Class Equivalent
+*   **OOP Concept**: Nested classes that can implicitly access members of the outer class instance.
+*   **Python Perspective**: There is no implicit binding to an outer object. If an inner class needs data from an outer instance, the outer instance must be passed and stored explicitly (usually during initialization).
+*   *Example*:
+    ```python
+    class OuterClass:
+        def __init__(self):
+            self.instance_var = 42
+
+        class InnerClass:
+            def __init__(self, outer):
+                self.outer = outer  # Explicit outer binding
+
+            def display(self):
+                print(self.outer.instance_var)
+    ```
+
+#### 3. Local Inner Classes (Method Scope)
+*   **OOP Concept**: Classes declared inside methods/functions, restricted to that function's scope.
+*   **Python Perspective**: You can declare classes inside any method. They are local to that function and are ideal for small, temporary helper objects that shouldn't pollute the module/global namespace.
+*   *Best Practice*: Pass enclosing values explicitly via the local class constructor rather than relying on closures implicitly.
+
+#### 4. Anonymous Inner Class Equivalent
+*   **OOP Concept**: One-time custom helper implementations.
+*   **Python Perspective**: Achieved using:
+    *   **Lambda functions**: Lightweight anonymous functions (for simple, single-expression operations).
+    *   **Inline helper classes**: Declared on the fly when multiple methods or states are required.
+
+---
+
+### Key Advantages & Design Use Cases
+
+Nested classes in Python are primarily **organizational** tools:
+1.  **Logical Grouping**: Organizes helper classes (like database configurations, API schemas, or validator templates) under their primary parent classes.
+2.  **Prevents Namespace Clutter**: Restricts helper types to the class namespace instead of cluttering the module scope.
+3.  **Self-Documenting Code**: Groups related schemas directly where they are used (e.g., nesting a `Config` class inside a `DatabaseConnection` class).
 
 ---
 
