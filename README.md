@@ -18,6 +18,7 @@ Welcome to the **OOPs Programming** repository! This project serves as a startin
 *   [`constructor_demo.py`](./constructor_demo.py): Demonstrates non-parameterized, parameterized, copy-constructor simulation, constructor overloading, and constructor chaining.
 *   [`encapsulation_demo.py`](./encapsulation_demo.py): Demonstrates encapsulation (data hiding), name mangling, and state validation in Python.
 *   [`access_modifiers_demo.py`](./access_modifiers_demo.py): Demonstrates Public, Protected, and Private access levels (naming conventions and name mangling) in Python.
+*   [`inheritance_demo.py`](./inheritance_demo.py): Demonstrates single, multilevel, hierarchical, and multiple inheritance (MRO resolution of the diamond problem) in Python.
 
 ## How to Run
 
@@ -691,6 +692,85 @@ Most Object-Oriented languages (like Java) support four distinct access levels. 
 | **Private** | ✔️ Yes | ❌ No | ❌ No | ❌ No | Double underscore: `__var` |
 
 *Note: In Python, `✔️` and `❌` for protected and private represent the **design convention** rather than rigid compiler limits.*
+
+---
+
+## Inheritance
+
+**Inheritance** is a core Object-Oriented Programming (OOP) concept that allows a class (subclass/child class) to inherit attributes and methods from another class (superclass/parent class). It promotes code reuse, reduces redundancy, and establishes hierarchical relationships.
+
+See the complete runnable implementation in [`inheritance_demo.py`](./inheritance_demo.py).
+
+### Core Components
+*   **Parent Class (Superclass)**: The class whose properties and methods are inherited. It serves as a base template (e.g., `SchoolMember`).
+*   **Subclass (Child Class)**: The class that inherits from the parent. It can reuse inherited attributes/methods, extend functionality, or override behaviors (e.g., `Student` or `Teacher`).
+
+---
+
+### Types of Inheritance in Python
+
+1.  **Single Inheritance**: A child class inherits from a single parent class. (One-to-One relationship)
+    *   *Example*: `Student` inherits from `SchoolMember`.
+2.  **Multilevel Inheritance**: A child class inherits from another child class, creating an inheritance chain.
+    *   *Example*: `GraduateStudent` inherits from `Student`, which inherits from `SchoolMember`.
+3.  **Hierarchical Inheritance**: Multiple child classes inherit from a single parent class. (One-to-Many relationship)
+    *   *Example*: Both `Student` and `Teacher` inherit from `SchoolMember`.
+4.  **Multiple Inheritance**: A class inherits from more than one parent class.
+    *   *Python Support*: Python natively supports multiple inheritance (unlike Java, which restricts multiple inheritance using classes to avoid ambiguity).
+
+---
+
+### Advantages of Inheritance
+*   **Reusability**: Write code once in a parent class and reuse it across multiple subclasses.
+*   **Modularity**: Cleanly separates concerns into specific classes.
+*   **Extensibility**: Add or alter features in a child class without touching the parent class.
+*   **Maintainability**: Centralizing shared logic makes debugging and updates easier.
+
+---
+
+### Important Inheritance Concepts
+
+#### 1. Method Overriding
+Method overriding allows a subclass to provide a specific implementation of a method already defined in its parent class. This supports runtime polymorphism.
+*   **Rules**:
+    *   The overriding method in the child class must have the same name and parameter list.
+    *   The child class method's access level cannot be more restrictive than the parent class's method.
+    *   Python dynamically overrides methods at runtime.
+
+#### 2. The `super()` Function
+Used to access parent class members and constructors. In constructors, `super().__init__()` chains initialization.
+*   *Best Practice*: Call `super().__init__()` at the start of the child constructor to ensure parent fields are set up first.
+
+#### 3. Method Overloading vs. Overriding
+
+| Aspect | Method Overloading | Method Overriding |
+| :--- | :--- | :--- |
+| **Definition** | Same method name with different parameter signatures. | Child class redefining a parent class method with the same signature. |
+| **Inheritance** | Does not require inheritance; occurs within a single class. | Requires inheritance; occurs between parent and child classes. |
+| **Parameters** | Must have different parameter lists (number, type, or order). | Must have the exact same parameter list. |
+| **Python Support** | Python does not natively support overloading; simulated via default arguments. | Fully supported dynamically. |
+
+---
+
+### Multiple Inheritance & The Diamond Problem
+
+The **Diamond Problem** occurs when a class inherits from two parent classes that both override a method from a common ancestor. This creates ambiguity: which parent's method should the child run?
+
+```
+      [Ancestor A]
+       /        \
+   [Parent B]  [Parent C]
+       \        /
+       [Child D]
+```
+
+*   **Java's Approach**: Disallows multiple inheritance with classes (only allowed via interfaces) to prevent conflicts.
+*   **Python's Approach**: Natively allows multiple inheritance. It resolves ambiguity using **Method Resolution Order (MRO)** via the C3 Linearization algorithm. MRO dictates a deterministic, linear search path for methods:
+    ```python
+    # For class D(B, C):
+    print(D.__mro__) 
+    # Output path: D -> B -> C -> A -> object
+    ```
 
 ---
 
