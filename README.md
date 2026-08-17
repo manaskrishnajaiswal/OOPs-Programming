@@ -22,6 +22,7 @@ Welcome to the **OOPs Programming** repository! This project serves as a startin
 *   [`polymorphism_demo.py`](./polymorphism_demo.py): Demonstrates static polymorphism simulation, operator overloading, dynamic polymorphism (overriding), and duck typing in Python.
 *   [`abstraction_demo.py`](./abstraction_demo.py): Demonstrates abstract classes, abstract subclass chains, interface simulation, and static methods in Python.
 *   [`interface_demo.py`](./interface_demo.py): Demonstrates interface declaration, multiple interfaces, interface inheritance, and loose coupling in Python.
+*   [`static_demo.py`](./static_demo.py): Demonstrates class variables, static methods, class methods, and definition-time execution (static block equivalent) in Python.
 
 ## How to Run
 
@@ -956,6 +957,86 @@ class MammalInterface(AnimalInterface, ABC):
     def walk(self):
         pass  # MammalInterface inherits eat() and adds walk()
 ```
+
+---
+
+## Understanding "Static" in Python
+
+Python does not have a dedicated `static` keyword like Java or C++. However, Python natively provides the same architectural patterns using **class variables**, **static methods**, and **module-level variables**. These are used when you want data or behavior to belong to the class (or module) rather than a specific object instance.
+
+See the complete runnable implementation in [`static_demo.py`](./static_demo.py).
+
+---
+
+### Static variables vs. Class variables in Python
+
+In Python, a **Class Variable** is defined directly inside the class body (outside methods). It is shared across all instances of a class, acting as the direct equivalent of Java's static variables.
+
+```python
+class Counter:
+    count = 0  # Class variable (shared among all objects)
+
+    def __init__(self):
+        Counter.count += 1  # Increments shared counter
+```
+
+#### Module-Level "Static" Variables
+In Python, a module is loaded once per process. Therefore, variables declared at the module level (outside any class or function) behave like "static globals". This is commonly used for shared configuration and global constants.
+
+---
+
+### Static Methods (`@staticmethod`) vs. Class Methods (`@classmethod`)
+
+Python distinguishes between helper behaviors that don't need class access and those that do:
+
+#### 1. Static Methods
+Declared using the `@staticmethod` decorator. It behaves like a normal utility function placed inside the class namespace.
+*   **Signatures**: Does not receive `self` or `cls` parameters automatically.
+*   **Access**: Cannot access instance variables or class variables directly unless an object/class reference is explicitly passed as an argument.
+*   *Example*:
+    ```python
+    class MathUtils:
+        @staticmethod
+        def add(a, b):
+            return a + b
+    ```
+
+#### 2. Class Methods
+Declared using the `@classmethod` decorator.
+*   **Signatures**: Receives the class type `cls` automatically as the first parameter.
+*   **Access**: Can inspect and modify class variables or instantiate class objects.
+*   *Example*:
+    ```python
+    class Counter:
+        count = 0
+
+        @classmethod
+        def reset_count(cls):
+            cls.count = 0
+    ```
+
+---
+
+### Static Blocks Equivalent in Python
+
+Python has no native static initializer blocks (`static {}` in Java). However, Python has a strict rule: **The class body is executed once when the class is defined (load-time).**
+
+Any code written directly inside the class body (outside methods) runs at definition time. This can be leveraged for one-time static setup:
+
+```python
+class Example:
+    print("Class body executed (one-time initialization).")  # Runs once at load time
+    value = 10
+```
+
+---
+
+### Advantages of Static Members in Python
+
+1.  **Shared State**: Class variables act as a single source of truth shared among all instances.
+2.  **Utility Methods**: `@staticmethod` is ideal for placing standalone helper methods within the relevant class namespace.
+3.  **Namespace Organization**: Groups related utility behaviors under a single class namespace.
+4.  **One-Time Setup**: Definition-time class-body execution handles one-time resource initialization.
 
 ---
 
