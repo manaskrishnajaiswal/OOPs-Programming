@@ -45,7 +45,7 @@ Hello World
 ## Introduction to OOP
 
 > [!NOTE]
-> **Pre-Requisites**: Before diving deep into OOPs, please note that this learning path is based on the Python programming language due to its readable syntax and wide usage in data science, web development, and scripting. For a quick refresher on language syntax, refer to the [Python Basics](https://takeuforward.org/plus/oops/introduction-to-oops/java-basics) resource or browse the basic demos listed below.
+> **Pre-Requisites**: Before diving deep into OOPs, please note that this learning path is based on the Python programming language due to its readable syntax and wide usage in data science, web development, and scripting. For a quick refresher on language syntax, you can browse the basic demos listed below.
 
 Object-Oriented Programming (OOP) is a programming paradigm (a style of writing code) based on the concept of **objects**, which can contain data and executable code:
 *   **Data**: Represented as attributes (often called fields or properties).
