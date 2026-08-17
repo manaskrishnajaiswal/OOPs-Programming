@@ -19,6 +19,7 @@ Welcome to the **OOPs Programming** repository! This project serves as a startin
 *   [`encapsulation_demo.py`](./encapsulation_demo.py): Demonstrates encapsulation (data hiding), name mangling, and state validation in Python.
 *   [`access_modifiers_demo.py`](./access_modifiers_demo.py): Demonstrates Public, Protected, and Private access levels (naming conventions and name mangling) in Python.
 *   [`inheritance_demo.py`](./inheritance_demo.py): Demonstrates single, multilevel, hierarchical, and multiple inheritance (MRO resolution of the diamond problem) in Python.
+*   [`polymorphism_demo.py`](./polymorphism_demo.py): Demonstrates static polymorphism simulation, operator overloading, dynamic polymorphism (overriding), and duck typing in Python.
 
 ## How to Run
 
@@ -771,6 +772,45 @@ The **Diamond Problem** occurs when a class inherits from two parent classes tha
     print(D.__mro__) 
     # Output path: D -> B -> C -> A -> object
     ```
+
+---
+
+## Polymorphism
+
+**Polymorphism** is a key Object-Oriented Programming (OOP) concept describing the ability of a single entity (such as a method, operator, or object) to behave differently in different contexts. The term comes from the Greek words for "many forms."
+
+See the complete runnable implementation in [`polymorphism_demo.py`](./polymorphism_demo.py).
+
+---
+
+### Types of Polymorphism: OOP Theory vs. Python
+
+Standard OOP defines two main forms of polymorphism:
+
+#### 1. Compile-Time Polymorphism (Static Polymorphism)
+*   **OOP Theory**: The correct method invocation is resolved by the compiler at compile-time based on the method's signature (parameter types, count, and order). This is achieved through **Method Overloading**.
+    *   *Examples*: `add(int, int)` vs. `add(double, double)`.
+*   **Python Perspective**: Because Python is a dynamically typed, interpreted language, it does not resolve method binding during a compile phase. It does not natively support traditional method overloading (the last defined method overrides any previous ones). However, Python simulates static overloading behavior using:
+    *   **Default parameter values**: Making some parameters optional.
+    *   **Variable-length arguments**: Using `*args` and `**kwargs`.
+    *   **Operator Overloading**: Python natively supports operator overloading using special "dunder" methods (e.g., `__add__`), letting standard operators (`+`, `*`, etc.) behave differently depending on the operand types.
+
+#### 2. Run-Time Polymorphism (Dynamic Polymorphism)
+*   **OOP Theory**: The method invocation is resolved dynamically during program execution. This is achieved via **Method Overriding** and **Dynamic Method Dispatch**, where the virtual machine decides which method to run based on the actual object type at runtime (late binding).
+*   **Python Perspective**: Python natively and extensively supports dynamic polymorphism.
+    *   **Method Overriding**: Subclasses can redefine parent methods to customize behavior.
+    *   **Duck Typing**: *"If it walks like a duck and quacks like a duck, it's a duck."* Python doesn't require subclasses to inherit from a common base class to act polymorphically. As long as an object implements the expected method interface, Python invokes it dynamically.
+
+---
+
+### Comparison of Polymorphism Forms
+
+| Property | Static Polymorphism (Overloading) | Dynamic Polymorphism (Overriding) |
+| :--- | :--- | :--- |
+| **Binding Time** | Compile-Time (Early Binding) | Run-Time (Late Binding / Dynamic Dispatch) |
+| **Mechanism** | Method Overloading, Operator Overloading | Method Overriding, Duck Typing |
+| **Speed** | Faster execution (binding already resolved) | Slower execution (requires runtime lookup) |
+| **Requirements** | Methods share a name but differ in parameters | Classes have inheritance (or share method names in Duck Typing) |
 
 ---
 
