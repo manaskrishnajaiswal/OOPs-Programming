@@ -1,0 +1,706 @@
+# OOPs Programming in Python
+
+Welcome to the **OOPs Programming** repository! This project serves as a starting point for learning Object-Oriented Programming (OOP) concepts, using Python as the core programming language.
+
+## Project Structure
+
+*   [`main.py`](./main.py): A simple Python entry script that prints `Hello World` to the console.
+*   [`string_demo.py`](./string_demo.py): Demonstrates standard Python string manipulation and common operations.
+*   [`input_example.py`](./input_example.py): Demonstrates console input/output using Python's `input()` function.
+*   [`type_casting_demo.py`](./type_casting_demo.py): Demonstrates type conversion between common numerical types.
+*   [`constants_demo.py`](./constants_demo.py): Demonstrates constant conventions in Python.
+*   [`arrays_demo.py`](./arrays_demo.py): Demonstrates 1D arrays, for loops, and 2D arrays using Python lists.
+*   [`conditionals_demo.py`](./conditionals_demo.py): Demonstrates conditional logic (`if`-`elif`-`else`) and `match`-`case` statements.
+*   [`loops_demo.py`](./loops_demo.py): Demonstrates `for`, `while`, and simulated `do-while` loops.
+*   [`exception_handling_demo.py`](./exception_handling_demo.py): Demonstrates runtime error catching using `try`-`except`-`finally`.
+*   [`employee_demo.py`](./employee_demo.py): Demonstrates core OOP concepts (classes, objects, attributes, and behaviors) with a model of an Employee entity.
+*   [`bank_account_demo.py`](./bank_account_demo.py): Demonstrates attributes, methods, getters, setters, encapsulation, and error validation using a Bank Account model.
+*   [`constructor_demo.py`](./constructor_demo.py): Demonstrates non-parameterized, parameterized, copy-constructor simulation, constructor overloading, and constructor chaining.
+*   [`encapsulation_demo.py`](./encapsulation_demo.py): Demonstrates encapsulation (data hiding), name mangling, and state validation in Python.
+*   [`access_modifiers_demo.py`](./access_modifiers_demo.py): Demonstrates Public, Protected, and Private access levels (naming conventions and name mangling) in Python.
+
+## How to Run
+
+Follow these instructions to run the Python scripts locally.
+
+### Prerequisites
+
+*   Python 3.10 or higher installed.
+
+### Execution
+
+Run any of the Python scripts using the python interpreter:
+
+```bash
+python main.py
+```
+
+Output:
+```text
+Hello World
+```
+
+---
+
+## Introduction to OOP
+
+> [!NOTE]
+> **Pre-Requisites**: Before diving deep into OOPs, please note that this learning path is based on the Python programming language due to its readable syntax and wide usage in data science, web development, and scripting. For a quick refresher on language syntax, refer to the [Python Basics](https://takeuforward.org/plus/oops/introduction-to-oops/java-basics) resource or browse the basic demos listed below.
+
+Object-Oriented Programming (OOP) is a programming paradigm (a style of writing code) based on the concept of **objects**, which can contain data and executable code:
+*   **Data**: Represented as attributes (often called fields or properties).
+*   **Code**: Represented as methods.
+
+Objects are instances of **classes**, which act as blueprints or templates defining the properties (attributes) and behaviors (methods) common to all objects of that type.
+
+---
+
+### Procedural vs. Object-Oriented Programming
+
+| Aspect | Procedural Programming | Object-Oriented Programming (OOP) |
+| :--- | :--- | :--- |
+| **Approach** | Focuses on a step-by-step sequence of actions. Control flows sequentially. | Focuses on modeling real-world entities as objects with data & behaviors combined. |
+| **Data Handling** | Data is globally accessible. High risk of accidental modifications, making maintenance harder. | Data is encapsulated within objects. Access is restricted through methods for better security. |
+| **Code Reusability** | Limited reusability. Functions can be reused, but lacks inheritance and polymorphism. | High reusability through inheritance (extending child classes) and polymorphism (generic operations). |
+| **Scalability** | Harder to scale; adding features requires editing multiple functions, risking breaking code. | Scales well for large systems; features are added by creating or modifying classes with minimal side-effects. |
+| **Modularity** | Structured via functions, but lacks rigorous separation of logic and data. | Structured via classes/objects, facilitating cleaner organization and maintainability. |
+| **Real-World Modeling** | Less aligned with real-world entities. Focuses on operations rather than relationships. | Closely mirrors real-world scenarios by representing entities as objects with state and behavior. |
+
+---
+
+### Core Pillars & Advantages of OOP
+
+1.  **Modularity**: Breaking down a complex problem into smaller, manageable, and reusable components (classes).
+    *   *Example*: A banking system split into `Account`, `Customer`, and `Transaction` classes.
+2.  **Code Reusability**: Extending and reusing existing functionality to reduce duplication and speed up development.
+    *   *Example*: A `Vehicle` parent class extended by `Car` and `Bike` classes.
+3.  **Scalability**: The ease of introducing new functionality without breaking or altering existing code.
+4.  **Security**: Protecting sensitive data by encapsulating attributes inside objects and exposing only necessary interfaces.
+    *   *Example*: Restricting direct access to a `self._balance` attribute in a bank account.
+
+#### Real-Life Analogy: A Bank System
+*   **Classes**: The templates defining system entities (e.g., `Account`, `Customer`, `Transaction`).
+*   **Objects**: Specific instances of those entities (e.g., `Raj's Account`, `John's Transaction`).
+*   **Attributes**: The states of entities (e.g., name, balance, account number).
+*   **Methods**: Actions that entities perform (e.g., `deposit()`, `withdraw()`, `transfer()`).
+
+#### Why is OOP better for large-scale applications?
+OOP is ideal for large-scale systems because it enforces modularity, enabling complex projects to be broken into smaller, decoupled components. Through features like inheritance and polymorphism, it allows developer teams to build scalable, secure, and highly maintainable codebases with minimal disruption to existing functionality.
+
+---
+
+## Python Basics
+
+### 2. Comments
+Comments are ignored by the computer. They are for humans to read.
+
+```python
+# This is a single line comment
+
+"""
+This is a 
+multi-line comment (or docstring)
+"""
+```
+
+### 3. Data Types
+Python is dynamically typed but strongly typed. It has several built-in data types to store different values:
+
+| Data Type | Description | Example |
+| :--- | :--- | :--- |
+| `int` | Integers of arbitrary precision | `my_int = 42` |
+| `float` | Double-precision decimals | `my_float = 3.14` |
+| `str` | Textual data | `my_string = "Hello"` |
+| `bool` | Boolean state | `my_bool = True` |
+| `list` | Ordered, mutable sequence | `my_list = [1, 2, 3]` |
+| `tuple` | Ordered, immutable sequence | `my_tuple = (1, 2)` |
+| `dict` | Key-value pairs | `my_dict = {"key": "val"}` |
+| `set` | Unordered collection of unique items | `my_set = {1, 2}` |
+
+### 4. Operators
+Operators are special symbols used to perform operations on variables and values.
+
+#### Arithmetic Operators
+| Operator | Name | Description |
+| :--- | :--- | :--- |
+| `+` | Addition | Adds two values. |
+| `-` | Subtraction | Subtracts the right operand from the left. |
+| `*` | Multiplication | Multiplies two values. |
+| `/` | Division | Divides the left operand by the right (returns a float). |
+| `//` | Floor Division | Divides the left operand by the right, truncating decimals. |
+| `%` | Modulo | Returns the remainder of a division operation. |
+| `**` | Exponentiation | Performs power calculation. |
+
+#### Unary Operators & Negation
+Unlike Java, Python does not have increment (`++`) or decrement (`--`) operators. Instead, Python uses:
+*   Increment/Decrement: `a += 1` / `a -= 1`
+*   Negation: `-x`
+*   Logical negation: `not flag`
+
+#### Relational Operators
+Used to compare two values. They return a boolean result (`True` or `False`).
+
+| Operator | Name | Description |
+| :--- | :--- | :--- |
+| `==` | Equal to | Checks if two values are equal. |
+| `!=` | Not equal to | Checks if two values are not equal. |
+| `>` | Greater than | Checks if the left value is greater than the right. |
+| `<` | Less than | Checks if the left value is less than the right. |
+| `>=` | Greater than or equal to | Checks if the left value is greater than or equal to the right. |
+| `<=` | Less than or equal to | Checks if the left value is less than or equal to the right. |
+
+#### Logical Operators
+Used to determine the logic between variables or values.
+
+| Operator | Description | Example |
+| :--- | :--- | :--- |
+| `and` | Returns `True` if both statements are true. | `x > 5 and x < 10` |
+| `or` | Returns `True` if at least one of the statements is true. | `x > 5 or x < 2` |
+| `not` | Inverts the boolean value. | `not flag` |
+
+#### Assignment Operators
+Used to assign values to variables.
+
+| Operator | Name | Description |
+| :--- | :--- | :--- |
+| `=` | Assignment | Assigns the value on the right to the variable on the left. |
+| `+=` | Add and Assign | Adds a value to the variable and assigns the result. |
+| `-=` | Subtract and Assign | Subtracts a value from the variable and assigns the result. |
+| `*=` | Multiply and Assign | Multiplies the variable by a value and assigns the result. |
+| `/=` | Divide and Assign | Divides the variable by a value and assigns the result. |
+| `%=` | Modulo and Assign | Assigns the remainder of the division to the variable. |
+
+### 5. Strings
+Strings are immutable sequence objects in Python used to store text.
+
+*   **Immutable**: Once created, a `str` object cannot be changed. Modifying it creates a new object in memory.
+
+#### Common String Operations
+
+See the complete runnable implementation in [`string_demo.py`](./string_demo.py):
+
+```python
+s1 = "Hello"
+arr = ['W', 'o', 'r', 'l', 'd']
+s2 = "".join(arr)  # Join char list to string
+
+print(s1 + " " + s2)       # Concatenate: Hello World
+print(s1[1])               # Index access: 'e'
+print(len(s1))             # Length: 5
+print(s1[0:2])             # Slicing (substring): "He"
+print(s1 == "Hello")       # Check content equality: True
+```
+
+### 6. Input & Output
+For retrieving user input from the console, Python provides the built-in `input()` function.
+
+See the complete runnable implementation in [`input_example.py`](./input_example.py):
+
+```python
+print("Enter age (int) and name (string) on separate lines:")
+try:
+    age = int(input())
+    name = input()
+    print(f"{name} is {age}")
+except ValueError:
+    print("Invalid input format.")
+```
+
+> [!NOTE]
+> **What about fast I/O?**
+> In Python, `sys.stdin.readline` can be imported from the `sys` module and is faster than standard `input()`. It reads an entire line including the trailing newline character, making it useful for competitive programming.
+
+### 7. Type Casting
+Type casting is the process of converting a variable from one data type to another.
+
+*   **Implicit Casting**: Done automatically by the Python interpreter when mixing types (e.g. adding an integer to a float yields a float).
+*   **Explicit Casting**: Performed manually using conversion functions like `int()`, `float()`, `str()`, etc.
+
+See the complete runnable implementation in [`type_casting_demo.py`](./type_casting_demo.py):
+
+```python
+my_int = 9
+my_float = float(my_int)  # Explicit casting: 9.0
+heavy_int = int(9.78)     # Explicit casting: 9 (fraction lost)
+```
+
+### 8. Constants
+Python has no built-in `const` or `final` keyword. We represent constants by naming convention using **UPPERCASE** letters.
+
+See the complete runnable implementation in [`constants_demo.py`](./constants_demo.py):
+
+```python
+# Convention: Use UPPERCASE for constants
+PI = 3.14
+```
+
+### 9. Lists (Arrays)
+Python uses mutable sequences called **Lists** to store multiple values (equivalent to arrays).
+
+See the complete runnable implementation in [`arrays_demo.py`](./arrays_demo.py):
+
+```python
+scores = [90, 80, 70]
+print(len(scores))  # 3
+print(scores[0])    # 90
+
+# Iteration
+for i in scores:
+    print(i)
+
+# 2D Array
+matrix = [ [1, 2], [3, 4] ]
+```
+
+### 10. Conditional Statements
+
+#### If, Elif, Else
+Allows executing code blocks conditionally.
+
+See the complete runnable implementation in [`conditionals_demo.py`](./conditionals_demo.py):
+
+```python
+marks = 85
+if marks > 90:
+    print("A")
+elif marks > 80:
+    print("B")
+else:
+    print("C")
+```
+
+#### Match-Case Statement (Python 3.10+)
+Selects one of many code blocks to be executed, similar to `switch` in other languages.
+
+```python
+day = 2
+match day:
+    case 1:
+        print("Monday")
+    case 2:
+        print("Tuesday")
+    case _:
+        print("Invalid")  # Wildcard pattern (acts as default)
+```
+
+### 11. Loops
+Loops are used to repeatedly execute a block of code while a specified condition is met.
+
+See the complete runnable implementation in [`loops_demo.py`](./loops_demo.py):
+
+#### For Loop
+Iterates over a sequence (e.g. a range, list, or string).
+```python
+for i in range(5):
+    print(i)
+```
+
+#### While Loop
+Executes as long as the condition remains true.
+```python
+i = 0
+while i < 5:
+    print(i)
+    i += 1
+```
+
+#### Do-While Loop Simulation
+Python has no native do-while loop, but it can be simulated using an infinite loop and a break statement:
+```python
+j = 0
+while True:
+    print(j)  # Runs at least once
+    j += 1
+    if j >= 5:
+        break
+```
+
+### 12. Exception Handling
+Exception handling allows you to handle runtime errors gracefully so that the application doesn't crash.
+
+See the complete runnable implementation in [`exception_handling_demo.py`](./exception_handling_demo.py):
+
+```python
+try:
+    my_numbers = [1, 2, 3]
+    print(my_numbers[10]) # IndexError
+except IndexError as e:
+    print("Something went wrong.")
+finally:
+    print("The 'try except' block is finished.")
+```
+
+---
+
+## Core OOP Concepts
+
+This section covers the primary building blocks of Object-Oriented Programming: classes, objects, attributes, behaviors, memory allocation, and lifecycle.
+
+See the complete runnable implementation in [`employee_demo.py`](./employee_demo.py).
+
+### 1. Class
+In object-oriented programming, a **Class** is a blueprint or template for creating objects. It defines attributes (data) and methods (functions) that the objects created from the class will have.
+*   **Memory**: A class does not occupy memory on its own. It is a structure from which individual objects are instantiated.
+
+For example, consider the `Employee` class blueprint in [`employee_demo.py`](./employee_demo.py):
+```python
+class Employee:
+    def __init__(self):
+        self._employee_name = ""
+        self._salary = 0.0
+
+    def set_name(self, name: str): ...
+    def set_salary(self, salary: float): ...
+    def get_salary(self) -> float: ...
+```
+
+> [!TIP]
+> **Keypoints**:
+> *   The `Employee` class acts as a blueprint that defines a set of attributes and methods, providing a logical representation of a real-world employee.
+> *   It defines attributes (`_employee_name` and `_salary`) and methods (`set_name`, `set_salary`, `get_salary`), outlining the capabilities of any future employee objects.
+
+---
+
+### 2. Object
+An **Object** is an instance of a class. When an object is created from a class, memory is allocated for it, and it holds data as specified by the class. Objects interact with other parts of the program by invoking methods and modifying attributes.
+
+For example, creating and configuring Employee objects in [`employee_demo.py`](./employee_demo.py):
+```python
+obj1 = Employee()
+obj2 = Employee()
+
+obj1.set_name("Raj")
+obj1.set_salary(50000.0)
+
+obj2.set_name("Rahul")
+obj2.set_salary(60000.0)
+```
+
+#### Output
+```text
+Raj's Salary: 50000.0
+Rahul's Salary: 60000.0
+```
+
+> [!TIP]
+> **Keypoints**:
+> *   The class itself does not occupy memory. It is the initialized objects (`obj1` and `obj2`) that consume memory resources.
+> *   Objects are isolated. Although `obj1` and `obj2` share the same class blueprint, they are allocated separate regions in memory. Consequently, one object cannot directly access or modify the internal state of another object.
+> *   The two instances represent distinct real-world employees (Raj and Rahul).
+
+---
+
+### 3. Attributes & Methods
+
+*   **Attributes (Fields / Properties)**: Represent the data or characteristics of an object. They define the state of the object at any given moment.
+    *   *Example*: In `Employee`, the attributes are `_employee_name` and `_salary`.
+*   **Methods (Behaviors / Functions)**: Actions or operations that an object of a class can perform. They operate on attributes and define the object's functionality.
+    *   *Example*: In `Employee`, the methods are `set_name()`, `set_salary()`, and `get_name()`.
+
+To understand the interaction between attributes and methods, we look at a practical banking scenario.
+
+See the complete runnable implementation in [`bank_account_demo.py`](./bank_account_demo.py).
+
+#### BankAccount Case Study
+In a real-world scenario, sensitive data (like the account balance) must be hidden from the outside world to ensure security and prevent unauthorized access. This is achieved by setting the attribute's access level to **private** and using methods to interact with it.
+
+We design a `BankAccount` class with:
+*   **Attributes**:
+    *   `Name` (String): Storing the name of the account holder.
+    *   `Balance` (Float): Storing the account balance. Set to **private** using double underscores `__balance` (invoking Python name mangling) to restrict direct access.
+*   **Methods**:
+    *   `Check Balance` (`get_balance`): Retrieves the current balance.
+    *   `Deposit` (`deposit(amount)`): Adds to the balance after validating that the amount is positive.
+    *   `Withdraw` (`withdraw(amount)`): Subtracts from the balance after validating that the amount is positive and that sufficient funds exist.
+
+#### Interacting via Getters & Setters
+Getters and setters provide controlled access to private data attributes:
+*   **Getters**: Methods used to safely retrieve the value of an attribute (e.g., `get_balance()`).
+*   **Setters**: Methods used to safely modify the value of an attribute under validation rules (e.g., `set_owner_name(name)`).
+
+#### Python BankAccount Example
+
+```python
+class BankAccount:
+    def __init__(self, owner_name: str, initial_balance: float = 0.0):
+        self._owner_name = owner_name
+        if initial_balance < 0:
+            raise ValueError("Initial balance cannot be negative.")
+        self.__balance = initial_balance  # Private attribute
+
+    def get_balance(self) -> float:
+        return self.__balance
+
+    def deposit(self, amount: float) -> bool:
+        if amount <= 0:
+            print("Error: Deposit amount must be positive.")
+            return False
+        self.__balance += amount
+        return True
+
+    def withdraw(self, amount: float) -> bool:
+        if amount <= 0:
+            print("Error: Withdrawal amount must be positive.")
+            return False
+        if amount > self.__balance:
+            print("Error: Insufficient funds.")
+            return False
+        self.__balance -= amount
+        return True
+```
+
+> [!IMPORTANT]
+> **Key Rules for Attributes & Methods**:
+> 1.  **Encapsulation**: Mark variables private (with `_` or `__`) and only expose them via public methods (getters/setters) to protect data integrity.
+> 2.  **Explicit Initialization**: In Python, all attributes must be explicitly declared and initialized inside the `__init__` constructor.
+> 3.  **Method Parameters**: Methods can accept parameters to safely modify the internal state of the object (e.g., `deposit(amount)`).
+> 4.  **Error Validation**: Methods must validate inputs (e.g., preventing negative deposit amounts or checking for insufficient balance before withdrawals) to maintain consistent states.
+
+---
+
+### 4. Creation and Deletion of Objects
+
+#### Creation
+Objects are instantiated from a class by calling the class name as if it were a function. This executes the `__init__` constructor method and allocates heap memory.
+```python
+obj = Employee()
+```
+
+#### Deletion
+Memory cleanup and object destruction depend on the programming language's memory management model:
+*   **Python**: Python automatically reclaims memory using reference counting and a cyclic garbage collector. When an object's reference count drops to zero, it is eligible for deletion.
+*   **C++**: Requires manual memory management. Objects created on the heap via `new` must be explicitly deleted using the `delete` keyword to avoid memory leaks.
+
+---
+
+### 5. Memory Allocation: Stack vs. Heap
+
+Different programming languages allocate memory for objects and variables using two key regions: Stack memory and Heap memory.
+
+| Feature | Stack Memory | Heap Memory |
+| :--- | :--- | :--- |
+| **Data Stored** | Local variables, function frame pointers, reference pointers. | Actual object instances and their dynamically bound attributes. |
+| **Allocation Style** | Automatic, LIFO (Last-In-First-Out) order when a function is invoked. | Dynamic allocation as objects are constructed. |
+| **Lifetime** | Tied to the execution scope of the function. Cleared when the function exits. | Exists until dereferenced and reclaimed by Python's Garbage Collector. |
+| **Access Speed** | Extremely fast. | Slower than stack access due to reference resolution. |
+
+---
+
+### 6. Constructors
+
+A **Constructor** is a special method inside a class that is automatically called when an object of that class is created. Its main purpose is to initialize instance attributes and prepare the object for use.
+
+In Python, the constructor is defined using the `__init__()` method.
+
+See the complete runnable implementation in [`constructor_demo.py`](./constructor_demo.py).
+
+> [!TIP]
+> **Keypoints**:
+> *   The constructor is always named `__init__`.
+> *   It must include `self` as the first parameter, which refers to the current object instance.
+> *   It has no return type and should not explicitly return any value.
+> *   If no constructor is defined, Python automatically provides a default constructor.
+
+#### Default Constructor Behavior
+If you do not define an `__init__()` method, Python provides a default one that creates the object but initializes no attributes. 
+*   **Variable Scoping**:
+    *   *Instance Variables*: Defined inside methods (usually `__init__`) using `self.name`. If accessed before assignment, Python raises an `AttributeError`.
+    *   *Local Variables*: Variables defined inside methods without `self`. If accessed before assignment, Python raises an `UnboundLocalError`.
+    *   *Class Variables*: Shared variables declared directly in the class body.
+    *   *Parent Constructor*: Not called automatically in inherited classes. Must be called using `super().__init__()`.
+
+---
+
+#### Types of Constructors
+
+1.  **Non-parameterized Constructor**: Does not take any additional arguments besides `self`.
+    ```python
+    class NonParameterizedDemo:
+        def __init__(self):
+            self.message = "Hello World"
+    ```
+2.  **Parameterized Constructor**: Takes arguments along with `self` to customize object state upon creation.
+    ```python
+    class ParameterizedDemo:
+        def __init__(self, name: str, age: int):
+            self.name = name
+            self.age = age
+    ```
+3.  **Copy Constructor**: Python does not support native copy constructors. However, they can be implemented manually by defining a constructor that takes another instance of the same class, or by using Python's `copy` module.
+    ```python
+    class CopyConstructorDemo:
+        def __init__(self, name: str, age: int):
+            self.name = name
+            self.age = age
+
+        @classmethod
+        def from_existing(cls, existing):
+            return cls(existing.name, existing.age)
+    ```
+
+---
+
+#### Constructor Overloading Simulation
+Python does not support traditional constructor overloading. A class can have only one `__init__()` method. However, we can simulate overloading using:
+*   **Default parameter values**: Making arguments optional.
+*   **Alternative constructors**: Using class methods (`@classmethod`) to provide multiple initialization strategies.
+
+```python
+class OverloadingDemo:
+    def __init__(self, name: str = "Guest", age: int = 18):  # Default parameters
+        self.name = name
+        self.age = age
+
+    @classmethod
+    def from_birth_year(cls, name: str, birth_year: int):  # Alternative constructor
+        from datetime import datetime
+        calculated_age = datetime.now().year - birth_year
+        return cls(name, calculated_age)
+```
+
+---
+
+#### Constructor Chaining
+Constructor chaining is a technique where a child class constructor delegates part of its initialization to the parent class constructor using `super().__init__()`.
+
+*   **Reusability**: Reuses common initialization logic without code duplication.
+*   **Method Resolution Order (MRO)**: Python follows MRO to lookup constructors in multiple inheritance scenarios.
+*   **Best Practice**: Placing `super().__init__()` at the start of the child constructor ensures the parent attributes are initialized first.
+
+```python
+class ParentClass:
+    def __init__(self, brand: str):
+        self.brand = brand
+
+class ChildClass(ParentClass):
+    def __init__(self, brand: str, model: str):
+        super().__init__(brand)  # Constructor Chaining
+        self.model = model
+```
+
+---
+
+## Encapsulation (Data Hiding in Python)
+
+**Encapsulation** is a fundamental concept in Object-Oriented Programming (OOP) where the internal implementation details (data and logic) of an object are hidden from the outside world. It is the process of bundling the object's data (attributes) and methods (functions) together into a single unit (a class).
+
+The primary goal of encapsulation is to protect the internal state of an object from unintended external modifications and to provide controlled access to it.
+
+See the complete runnable implementation in [`encapsulation_demo.py`](./encapsulation_demo.py).
+
+> [!NOTE]
+> **Key Concept**:
+> Encapsulation enforces data hiding, ensuring that attributes within a class are not directly accessible to external code. Instead, it provides **getter and setter** methods to access and modify these attributes. By making attributes private, the class retains full control over how data is accessed and modified, enforcing business logic and validation rule checks.
+
+---
+
+### Importance of Encapsulation
+
+1.  **Data Security**: Sensitive data is hidden from external manipulation and can only be modified in a controlled, validated manner.
+2.  **Flexibility & Maintenance**: If the internal class implementation needs to change (e.g. data structure storage change), you can modify it without breaking external client code as long as the public method interfaces remain unchanged.
+3.  **Modular Code**: Bundling related data and behaviors together promotes clean, modular, and organized code that is easier to read and maintain.
+4.  **Improved Debugging & Testing**: With controlled access, you can isolate and validate method behaviors (like getters and setters) independently.
+5.  **Reduced Complexity**: By hiding complex internal workings and exposing only clean interfaces, encapsulation reduces the cognitive load on developers using the class.
+
+---
+
+### Key Takeaways in Python
+
+*   **Private Data**: In Python, prefixing attributes with double underscores (e.g., `__balance`) triggers **name mangling**, making them private. This restricts direct access from outside the class:
+    ```python
+    try:
+        print(acc.__balance)  # Raises AttributeError
+    except AttributeError:
+        pass
+    ```
+*   **Convention-Based**: Note that Python's private attributes are based on naming mechanism changes rather than hard language restrictions. You can technically access mangled properties using `_ClassName__attributeName` (e.g. `_EncapsulatedBankAccount__balance`), although doing so is strongly discouraged.
+*   **Getter and Setter Interfaces**: Public getter and setter methods (such as `get_balance()` and `deposit(amount)`) serve as controlled entry points.
+*   **State Integrity & Validation**: Setters/Modifiers can run validation checks (e.g., checking that deposit amount is positive) before altering attributes.
+
+```python
+class EncapsulatedBankAccount:
+    def __init__(self, holder_name: str, balance: float):
+        self.__holder_name = holder_name
+        self.__balance = balance  # Private attribute
+
+    def get_balance(self) -> float:
+        return self.__balance
+
+    def deposit(self, amount: float):
+        if amount <= 0:
+            print("Validation Error: Deposit amount must be positive.")
+            return
+        self.__balance += amount
+```
+
+> [!IMPORTANT]
+> **Design vs. Mechanism**:
+> Encapsulation is a **design principle** (the goal of hiding details and grouping data/logic). Access modifiers (private, public, protected attributes) and getter/setter methods are the **mechanisms** used to achieve encapsulation.
+
+---
+
+## Access Modifiers
+
+**Access Modifiers** define the visibility and accessibility of classes, methods, variables, and other members of a program. They control which parts of the program can interact with a particular component, ensuring code safety and enforcing encapsulation boundaries.
+
+See the complete runnable implementation in [`access_modifiers_demo.py`](./access_modifiers_demo.py).
+
+### Purpose of Access Modifiers
+1.  **Encapsulation**: Protects sensitive variables and methods from accidental external modification.
+2.  **Controlled Access**: Empowers developers to define public APIs while keeping structural details hidden.
+3.  **Security**: Enhances security and data integrity by restricting access to authorized classes.
+4.  **Flexibility**: Permits controlled code sharing via inheritance hierarchy.
+
+---
+
+### Access Levels in Standard OOP vs. Python
+
+Most Object-Oriented languages (like Java) support four distinct access levels. While Python does not enforce access levels at the compiler level, it uses **naming conventions** to simulate them:
+
+#### 1. Public Access Modifier
+*   **OOP definition**: Globally accessible from anywhere in the program.
+*   **Python implementation**: Any attribute or method without a prefix is public by default.
+*   *Key Points*: Used for APIs, public helpers, and universally available properties.
+*   *Example*: `self.name` or `def display_name(self):`
+
+#### 2. Protected Access Modifier
+*   **OOP definition**: Accessible only within the same package and by subclasses.
+*   **Python implementation**: Prefixed with a **single underscore** (e.g., `_serial_number`). This is a convention warning other developers that the member is protected; Python does not prevent external access.
+*   *Key Points*: Promotes inheritance by allowing child classes access, while alerting outside code to avoid direct interaction.
+*   *Example*: `self._serial_number` or `def _display_protected(self):`
+
+#### 3. Private Access Modifier
+*   **OOP definition**: Accessible only within the declaring class.
+*   **Python implementation**: Prefixed with a **double underscore** (e.g., `__engine_code`). This triggers **name mangling**, altering the identifier internally (e.g., `_ClassName__attributeName`) to prevent direct external access and avoid naming collisions in subclasses.
+*   *Key Points*: Enforces compile-time/runtime protection for highly sensitive states; subclass access is blocked.
+*   *Example*: `self.__engine_code` or `def __display_private(self):`
+
+#### 4. Default Access (Package-Private)
+*   **OOP definition**: Accessible only within classes of the same package (Java's default).
+*   **Python implementation**: Python doesn't have a direct equivalent of packages in the Java compilation sense, but internal module/package conventions typically use a single underscore prefix at the module level.
+
+---
+
+### Comparison of Scopes in OOP
+
+| Access Modifier | Class Internal | Package / Module | Subclass (Inherited) | World (External) | Python Naming Mechanism |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Public** | ✔️ Yes | ✔️ Yes | ✔️ Yes | ✔️ Yes | Default (no prefix) |
+| **Protected** | ✔️ Yes | ✔️ Yes | ✔️ Yes | ❌ No (discouraged) | Single underscore: `_var` |
+| **Default** | ✔️ Yes | ✔️ Yes | ❌ No | ❌ No | (Package-private concept) |
+| **Private** | ✔️ Yes | ❌ No | ❌ No | ❌ No | Double underscore: `__var` |
+
+*Note: In Python, `✔️` and `❌` for protected and private represent the **design convention** rather than rigid compiler limits.*
+
+---
+
+## Summary
+We covered the fundamental building blocks of Python:
+
+*   **Structure**: Functions, entry scripts using `__main__` checker, and class structures.
+*   **Data**: Native dynamic types, lists, dictionaries, constants, and strings.
+*   **Logic**: Operators, conditional if-elif-else statements, and match-case.
+*   **Control**: Loops (`for` ranges, `while`, and simulated do-while loops).
+*   **Safety**: Exception handling via `try-except-finally` blocks.
+
+Practice writing and executing these snippets in their respective demo files to get comfortable with Python syntax!
