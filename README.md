@@ -25,6 +25,7 @@ Welcome to the **OOPs Programming** repository! This project serves as a startin
 *   [`static_demo.py`](./static_demo.py): Demonstrates class variables, static methods, class methods, and definition-time execution (static block equivalent) in Python.
 *   [`nested_classes_demo.py`](./nested_classes_demo.py): Demonstrates static nested classes, non-static inner classes, method-scoped local classes, and anonymous lambda behaviors in Python.
 *   [`relationships_demo.py`](./relationships_demo.py): Demonstrates class relationships (Association, Aggregation, and Composition) and nested lifecycle bindings in Python.
+*   [`cloning_demo.py`](./cloning_demo.py): Demonstrates shallow copying, deep copying, custom cloning hooks (`__copy__`, `__deepcopy__`), and reference mutation effects in Python.
 
 ## How to Run
 
@@ -1154,6 +1155,80 @@ In complex software architectures, a class can participate in multiple relations
 | **Ownership** | None (independent links) | Container references but does not own | Container owns lifecycle of parts |
 | **Lifecycle Independence** | Both classes exist independently | Contained class can exist independently | Contained class is destroyed with container |
 | **Real-world Example** | `Student` and `Course` | `Employee` and `Department` | `House` and `Room` |
+
+---
+
+## Object Cloning
+
+**Object Cloning** refers to the process of creating an exact copy of an object. The cloned object occupies a separate memory location, allowing developers to inspect or mutate it without directly affecting the original object (with some caveats regarding shallow copying).
+
+See the complete runnable implementation in [`cloning_demo.py`](./cloning_demo.py).
+
+---
+
+### Purpose of Object Cloning
+1.  **Efficiency**: Replicating a complex object graph without invoking costly init operations or querying data stores repeatedly.
+2.  **State Preservation**: Taking structural snapshot backups of object states (useful for rollback systems or undo/redo behaviors).
+3.  **Reducing Coupling**: Preventing multiple components from holding shared references to a mutable object.
+4.  **Prototyping**: Enabling objects to act as prototypes, where modifications are made to a cloned variant of a baseline template (Prototype design pattern).
+
+---
+
+### Shallow Cloning vs. Deep Cloning
+
+Python facilitates object cloning using the standard library `copy` module. There are two primary levels of cloning:
+
+#### 1. Shallow Cloning (`copy.copy`)
+*   **Mechanism**: Copies the top-level outer object structure but copies the *references* to any nested objects or structures inside it.
+*   **Implication**: The original and the cloned object share references to the same nested mutable attributes (e.g. lists, dicts, custom objects). If you modify a nested mutable attribute on the clone, the original object will also reflect this mutation.
+*   *Example*:
+    ```python
+    import copy
+    cloned_obj = copy.copy(original_obj)
+    ```
+
+#### 2. Deep Cloning (`copy.deepcopy`)
+*   **Mechanism**: Recursively copies the outer object as well as all nested objects and references in its entire object graph.
+*   **Implication**: Creates a fully independent copy. Modifying nested attributes on the cloned object will have no impact whatsoever on the original.
+*   *Example*:
+    ```python
+    import copy
+    cloned_obj = copy.deepcopy(original_obj)
+    ```
+
+---
+
+### Customizing Cloning Behavior
+Python classes can hook into cloning operations by overriding special methods:
+*   `__copy__(self)`: Triggered when `copy.copy(obj)` is called. Should return a new shallow copy of the instance.
+*   `__deepcopy__(self, memo)`: Triggered when `copy.deepcopy(obj)` is called. The `memo` dictionary tracks already-cloned objects to prevent infinite loops in cyclic graphs. Should return a new deep copy of the instance.
+
+```python
+class Person:
+    def __init__(self, name, address):
+        self.name = name
+        self.address = address
+
+    def __copy__(self):
+        return Person(self.name, self.address)  # Shares self.address reference
+
+    def __deepcopy__(self, memo):
+        # Recursively copies the nested address
+        new_address = copy.deepcopy(self.address, memo)
+        return Person(self.name, new_address)
+```
+
+---
+
+### Cloning Comparison Matrix
+
+| Aspect | Shallow Cloning | Deep Cloning |
+| :--- | :--- | :--- |
+| **Copies Outer Object** | ✔️ Yes | ✔️ Yes |
+| **Copies Nested Objects** | ❌ No (shares references) | ✔️ Yes (recursively creates separate objects) |
+| **Independent Nested Objects?** | ❌ No | ✔️ Yes |
+| **Common Tool** | `copy.copy(obj)` | `copy.deepcopy(obj)` |
+| **Primary Use Case** | When nested properties are immutable (integers, strings, tuples) and safe to share | When nested properties are mutable (lists, dicts, custom objects) and must be isolated |
 
 ---
 
