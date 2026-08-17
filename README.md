@@ -27,6 +27,7 @@ Welcome to the **OOPs Programming** repository! This project serves as a startin
 *   [`relationships_demo.py`](./relationships_demo.py): Demonstrates class relationships (Association, Aggregation, and Composition) and nested lifecycle bindings in Python.
 *   [`cloning_demo.py`](./cloning_demo.py): Demonstrates shallow copying, deep copying, custom cloning hooks (`__copy__`, `__deepcopy__`), and reference mutation effects in Python.
 *   [`generics_demo.py`](./generics_demo.py): Demonstrates generic classes, generic functions, bounded type parameters, Union wildcards, and Python's lack of runtime type enforcement.
+*   [`file_handling_demo.py`](./file_handling_demo.py): Demonstrates writing, reading, pathlib properties, context managers, and custom log appending in Python.
 
 ## How to Run
 
@@ -1363,6 +1364,66 @@ Python simulates wildcards using:
 It is critical to note that **Python type hints are not enforced at runtime by the interpreter.**
 *   At runtime, type annotations behave similarly to Java's **Type Erasure** because the Python virtual machine ignores type hints during execution.
 *   For instance, declaring `box = Box[int](10)` will still allow you to call `box.set("a string")` during execution without raising a runtime error. Enforcing these constraints at runtime requires manual validation checks (e.g., using `isinstance()`).
+
+---
+
+## File Handling
+
+**File Handling** is the process of reading from and writing to files to store and retrieve data persistently on disk. This is a crucial concept in software development for managing persistent configurations, logging diagnostic logs, and recording long-term data files.
+
+See the complete runnable implementation in [`file_handling_demo.py`](./file_handling_demo.py).
+
+---
+
+### Importance of File Handling in OOP
+Integrating File Handling within Object-Oriented designs allows objects to persist state, write structural system logs (logging), and read environmental variables or configuration schemas (configuration management).
+
+---
+
+### Built-in File Operations & Modes
+Python uses the built-in `open(file, mode)` function to handle file operations. Common file opening modes include:
+*   `"r"`: **Read Mode** (Default). Opens a file for reading; raises `FileNotFoundError` if the file doesn't exist.
+*   `"w"`: **Write Mode**. Opens a file for writing; creates the file if it doesn't exist, and **truncates (overwrites)** all existing contents if it does.
+*   `"a"`: **Append Mode**. Opens a file for appending data; creates the file if it doesn't exist, and writes new data at the end of the file.
+*   `"x"`: **Exclusive Creation**. Creates the file, but fails and raises `FileExistsError` if the file already exists.
+*   `"b"`: **Binary Mode**. Used for reading/writing binary data (like images or compiled bytes).
+*   `"t"`: **Text Mode** (Default). Opens in standard text format.
+
+---
+
+### Checking File Metadata Properties
+The standard library modules `pathlib` and `os` provide clean, object-oriented file properties checks:
+
+```python
+from pathlib import Path
+
+p = Path("example.txt")
+if p.exists():
+    print(f"Name: {p.name}")
+    print(f"Size: {p.stat().st_size} bytes")
+    print(f"Absolute Path: {p.resolve()}")
+```
+
+---
+
+### Context Manager (Resource Management)
+Python uses the **`with` statement** as a context manager for handling file buffers. It guarantees that the file stream is automatically and safely closed when execution exits the block, even if runtime exceptions are raised. This behaves similarly to Java's **try-with-resources** statement.
+
+```python
+# Context manager handles opening/closing automatically
+with open("example.txt", "r") as reader:
+    for line in reader:
+        print(line.strip())
+```
+
+---
+
+### Common File Handling Issues
+
+1.  **`FileNotFoundError`**: Raised when attempting to open a non-existent file in read (`"r"`) mode. Avoided by checking `path.exists()` beforehand.
+2.  **`PermissionError`**: Raised when writing to files with insufficient system privileges (e.g., system files or write-protected directories).
+3.  **Resource Leaks**: Failing to close files. Avoided by exclusively using `with` context managers.
+4.  **Encoding Conflicts**: Different platforms write files in different text formats. *Best Practice: Always specify the encoding explicitly (e.g., `open("file.txt", "w", encoding="utf-8")`).*
 
 ---
 
