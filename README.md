@@ -24,6 +24,7 @@ Welcome to the **OOPs Programming** repository! This project serves as a startin
 *   [`interface_demo.py`](./interface_demo.py): Demonstrates interface declaration, multiple interfaces, interface inheritance, and loose coupling in Python.
 *   [`static_demo.py`](./static_demo.py): Demonstrates class variables, static methods, class methods, and definition-time execution (static block equivalent) in Python.
 *   [`nested_classes_demo.py`](./nested_classes_demo.py): Demonstrates static nested classes, non-static inner classes, method-scoped local classes, and anonymous lambda behaviors in Python.
+*   [`relationships_demo.py`](./relationships_demo.py): Demonstrates class relationships (Association, Aggregation, and Composition) and nested lifecycle bindings in Python.
 
 ## How to Run
 
@@ -1102,6 +1103,57 @@ Nested classes in Python are primarily **organizational** tools:
 1.  **Logical Grouping**: Organizes helper classes (like database configurations, API schemas, or validator templates) under their primary parent classes.
 2.  **Prevents Namespace Clutter**: Restricts helper types to the class namespace instead of cluttering the module scope.
 3.  **Self-Documenting Code**: Groups related schemas directly where they are used (e.g., nesting a `Config` class inside a `DatabaseConnection` class).
+
+---
+
+## Relationships Between Classes
+
+In Object-Oriented Programming, classes act as the structural blueprints of a system. The interactions and associations between these classes define how objects collaborate to represent real-world processes.
+
+These interactions are categorized into three major relationships based on ownership, coupling strength, and object lifecycle bindings.
+
+See the complete runnable implementation in [`relationships_demo.py`](./relationships_demo.py).
+
+---
+
+### 1. Association
+**Association** is the most general relationship between two classes. It represents a semantic connection or link where objects of one class interact with objects of another.
+*   **Cardinality**: Connections can be one-to-one (e.g., `Person` and `Passport`), one-to-many (e.g., `Teacher` and `Student`s), or many-to-many (e.g., `Student` and `Course`s).
+*   **Implementation**: Done by passing references or keeping collections of references inside objects.
+
+---
+
+### 2. Aggregation
+**Aggregation** is a specialized, weaker form of association representing a **"Has-A"** or **"Whole-Part"** relationship.
+*   **Lifecycle**: The related objects can exist independently. Destroying the container ("whole") does not affect the contained ("part") objects.
+*   **Ownership**: The container class references the part class, but does not own or manage its lifespan.
+*   *Example*: A `Department` aggregates `Employee`s. If the department is closed down, the employees still exist independently in memory.
+
+---
+
+### 3. Composition
+**Composition** is a restrictive, strong form of aggregation representing a **"Part-Of"** relationship.
+*   **Lifecycle**: The lifecycles of the related objects are tightly coupled. The contained objects cannot exist outside the lifecycle of the container. If the container ("whole") is destroyed, the parts are automatically destroyed.
+*   **Ownership**: The container class owns and manages the lifecycle of the part class.
+*   *Example*: A `House` is composed of `Room`s. If the house is demolished, the rooms cease to exist. In Python code, this is modeled by instantiating the `Room` objects inside the `House` class constructor rather than passing them in.
+
+---
+
+### Dual / Multiple Relationships
+In complex software architectures, a class can participate in multiple relationships simultaneously. For example:
+*   A `Library` class has an **aggregation** relationship with a `Book` class (books can be removed from a library and still exist).
+*   The `Book` class has a **composition** relationship with a `Chapter` class (chapters cease to exist if the book is destroyed).
+
+---
+
+### Relationship Comparison Matrix
+
+| Aspect | Association | Aggregation | Composition |
+| :--- | :--- | :--- | :--- |
+| **Relationship Type** | General connection | Weak "Has-A" (Whole-Part) | Strong "Part-Of" (Co-dependent) |
+| **Ownership** | None (independent links) | Container references but does not own | Container owns lifecycle of parts |
+| **Lifecycle Independence** | Both classes exist independently | Contained class can exist independently | Contained class is destroyed with container |
+| **Real-world Example** | `Student` and `Course` | `Employee` and `Department` | `House` and `Room` |
 
 ---
 
