@@ -324,19 +324,75 @@ while True:
 ```
 
 ### 12. Exception Handling
-Exception handling allows you to handle runtime errors gracefully so that the application doesn't crash.
 
-See the complete runnable implementation in [`exception_handling_demo.py`](./exception_handling_demo.py):
+**Exception Handling** is a mechanism in Python that helps manage runtime errors and maintain the normal flow of a program. An exception is an unwanted or unexpected event that disrupts the standard execution sequence.
+
+See the complete runnable implementation in [`exception_handling_demo.py`](./exception_handling_demo.py).
+
+#### Importance of Exception Handling
+*   **Prevents Crashes**: Ensures a single error doesn't terminate the entire process abruptly.
+*   **Graceful Recovery**: Allows the application to log errors, report details, or rollback operations safely.
+*   **Separates Logic**: Decouples standard business logic from error handling logic.
+*   **Cleanup Operations**: Guarantees resource release (e.g., closing files/sockets) using `finally`.
+
+---
+
+#### The Try-Except-Else-Finally Mechanism
+
+Python provides the following blocks for control:
+1.  **`try`**: Encapsulates code that may throw an exception.
+2.  **`except`**: Catches and handles specific exceptions. Multiple `except` blocks can handle different exception types. *Rule: Catch blocks should be ordered from most specific to most general.*
+3.  **`else`**: Run only if **no** exceptions were raised in the `try` block.
+4.  **`finally`**: Executed unconditionally (always runs), whether an exception occurred or not. Crucial for resource cleanup.
 
 ```python
 try:
-    my_numbers = [1, 2, 3]
-    print(my_numbers[10]) # IndexError
-except IndexError as e:
-    print("Something went wrong.")
+    arr = [1, 2, 3]
+    val = arr[0] / 2
+except IndexError:
+    print("Error: List index out of bounds.")
+except ZeroDivisionError:
+    print("Error: Division by zero is not allowed.")
+else:
+    print("Operation succeeded, no errors occurred.")
 finally:
-    print("The 'try except' block is finished.")
+    print("Block execution complete (cleanup).")
 ```
+
+---
+
+#### Raising Exceptions & Propagation (`raise`)
+
+In Python, the `raise` keyword is used to manually throw an exception.
+*   **Syntax**: `raise ExceptionType("Error Message")`
+*   **No `throws` Keyword**: Python does not require you to declare exceptions in a function signature (unlike Java's `throws` keyword). Exceptions automatically propagate up the call stack until caught or causing a crash.
+
+| Feature | `raise` keyword | `throws` declaration (No Python equivalent) |
+| :--- | :--- | :--- |
+| **Purpose** | Used to explicitly throw an exception. | Java syntax to declare exceptions a method might propagate. |
+| **Location** | Inside a block/function body. | In function/method signatures. |
+| **Enforcement** | Evaluated dynamically at runtime. | Checked exceptions are checked at compile-time. |
+
+---
+
+#### Custom Exceptions
+Custom exceptions let you define application-specific errors. This is achieved by subclassing the built-in `Exception` class:
+
+```python
+class CustomException(Exception):
+    def __init__(self, message):
+        super().__init__(message)
+
+try:
+    raise CustomException("This is a custom application error!")
+except CustomException as e:
+    print(f"Caught: {e}")
+```
+
+---
+
+#### Checked vs. Unchecked Exceptions
+Unlike Java, **Python does not support Checked Exceptions**. All exceptions in Python are effectively unchecked: the language does not compile-time enforce wrapping operations in try-except blocks or declaring them in signatures. Exceptions are resolved dynamically at runtime.
 
 ---
 
